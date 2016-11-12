@@ -8,7 +8,7 @@ This module allows token to be stored in a [LokiJS](http://lokijs.org/) database
 
 First, install the module:
 
-`$ npm install passwordless-likijsstore --save`
+`$ npm install passwordless-lokijsstore --save`
 
 Afterwards, follow the guide for [Passwordless](https://github.com/florianheinemann/passwordless). A typical implementation may look like this:
 
