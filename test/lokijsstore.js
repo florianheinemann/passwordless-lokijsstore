@@ -99,24 +99,26 @@ describe('Specific tests', function() {
 		})
 	})
 
-	// it('should store tokens only in their hashed form', function (done) {
-	// 	var store = TokenStoreFactory();
-	// 	var token = uuid.v4();
-	// 	var uid = chance.email();
-	// 	store.storeOrUpdate(token, uid, 
-	// 		1000*60, 'http://' + chance.domain() + '/page.html', 
-	// 		function() {
-	// 			MongoClient.connect(testUri, function(err, db) {
-	// 				db.collection('passwordless-token', function(err, collection) {
-	// 					collection.findOne({uid: uid}, function(err, item) {
-	// 						expect(item.uid).to.equal(uid);
-	// 						expect(item.hashedToken).to.not.equal(token);
-	// 						done();
-	// 					});
-	// 				});
-	// 			})
-	// 		});
-	// })
+	it('should store tokens only in their hashed form', function (done) {
+		var store = TokenStoreFactory();
+		var token = uuid.v4();
+		var uid = chance.email();
+		store.storeOrUpdate(token, uid, 
+			1000*60, 'http://' + chance.domain() + '/page.html', 
+			function() {
+
+				var db = new Loki(testFile);
+				db.loadDatabase({}, function() {
+					var collection = db.getCollection('passwordless-token');
+					if(collection) {
+						var result = collection.findOne({uid: uid}); 
+						expect(result.uid).to.equal(uid);
+						expect(result.hashedToken).to.not.equal(token);
+						done();
+					}
+				})
+			});
+	})
 
 	// it('should store tokens not only hashed but also salted', function (done) {
 	// 	var store = TokenStoreFactory();
