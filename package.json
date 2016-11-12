@@ -1,13 +1,13 @@
 {
   "name": "passwordless-lokijsstore",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "LokiJS TokenStore for Passwordless",
   "main": "index.js",
   "scripts": {
     "test": "grunt test"
   },
   "dependencies": {
-    "bcrypt": "^0.8.7",
+    "bcryptjs": "^2.3.0",
     "lokijs": "^1.4.1",
     "passwordless-tokenstore": "0.0.10"
   },
@@ -38,7 +38,6 @@
     "lokijs",
     "nopassword",
     "no-password",
-    "password-less",
     "tokenstore"
   ]
 }
