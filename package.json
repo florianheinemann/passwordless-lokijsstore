@@ -27,12 +27,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/florianheinemann/passwordless-mongostore.git"
+    "url": "https://github.com/florianheinemann/passwordless-lokijsstore.git"
   },
   "bugs": {
-    "url": "https://github.com/florianheinemann/passwordless-mongostore/issues"
+    "url": "https://github.com/florianheinemann/passwordless-lokijsstore/issues"
   },
-  "homepage": "https://github.com/florianheinemann/passwordless-mongostore",
+  "homepage": "https://github.com/florianheinemann/passwordless-lokijsstore",
   "keywords": [
     "passwordless",
     "lokijs",
