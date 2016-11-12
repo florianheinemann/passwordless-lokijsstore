@@ -1,0 +1,44 @@
+{
+  "name": "passwordless-lokijsstore",
+  "version": "0.0.1",
+  "description": "LokiJS TokenStore for Passwordless",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "lokijs": "^1.4.1",
+    "passwordless-tokenstore": "0.0.10"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chance": "^1.0.4",
+    "grunt": "^1.0.1",
+    "grunt-mocha-test": "^0.13.2",
+    "mocha": "^3.1.2",
+    "node-uuid": "^1.4.7",
+    "passwordless-tokenstore-test": "^0.1.4"
+  },
+  "author": "Florian Heinemann <florian.heinemann@gmail.com> (http://twitter.com/thesumofall)",
+  "license": "MIT",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/florianheinemann/passwordless-mongostore.git"
+  },
+  "bugs": {
+    "url": "https://github.com/florianheinemann/passwordless-mongostore/issues"
+  },
+  "homepage": "https://github.com/florianheinemann/passwordless-mongostore",
+  "keywords": [
+    "passwordless",
+    "lokijs",
+    "nopassword",
+    "no-password",
+    "password-less",
+    "tokenstore"
+  ]
+}
