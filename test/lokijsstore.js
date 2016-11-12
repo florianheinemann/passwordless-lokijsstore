@@ -21,16 +21,19 @@ function TokenStoreFactory() {
 var beforeEachTest = function(done) {
 	var db = new Loki(testFile);
 	db.loadDatabase({}, function() {
-		var collection = db.getCollection(testCollection);
-		if(collection) {
-			db.removeCollection(testCollection);
-		}
-		done();
+		db.deleteDatabase(null, function() {
+			done();
+		});
 	})
 }
 
 var afterEachTest = function(done) {
-	done();
+	var db = new Loki(testFile);
+	db.loadDatabase({}, function() {
+		db.deleteDatabase(null, function() {
+			done();
+		});
+	})
 }
 
 // Call all standard tests
