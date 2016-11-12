@@ -65,45 +65,39 @@ describe('Specific tests', function() {
 		expect(function() { new LokiJSStore(testFile, { lokijsstore: {collection:'user'}}) }).to.not.throw();
 	})
 
-	// it('should default to "passwordless-token" as collection name', function (done) {
-	// 	var store = TokenStoreFactory();
+	it('should default to "passwordless-token" as collection name', function (done) {
+		var store = TokenStoreFactory();
 
-	// 	MongoClient.connect(testUri, function(err, db) {
-	// 		db.collection('passwordless-token', {strict:true}, function(err, collection) {
-	// 			expect(err).to.exist;
+		store.storeOrUpdate(uuid.v4(), chance.email(), 
+			1000*60, 'http://' + chance.domain() + '/page.html', 
+			function() {
+				var db = new Loki(testFile);
+				db.loadDatabase({}, function() {
+					var collection = db.getCollection('passwordless-token');
+					var collection2 = db.getCollection('other');
+					expect(collection).to.exist;
+					expect(collection2).to.not.exist;
+					done();
+				})
+		})
+	})
 
-	// 			store.storeOrUpdate(uuid.v4(), chance.email(), 
-	// 				1000*60, 'http://' + chance.domain() + '/page.html', 
-	// 				function() {
-	// 					db.collection('passwordless-token', {strict:true}, function(err, collection) {
-	// 						expect(collection).to.exist;
-	// 						expect(err).to.not.exist;
-	// 						done();
-	// 					});
-	// 				});
-	// 		});
-	// 	})
-	// })
+	it('should change name of collection based on "lokijsstore.collection"', function (done) {
+		var store = new LokiJSStore(testFile, { lokijsstore : { collection: 'othername' }});
 
-	// it('should change name of collection based on "mongostore.collection"', function (done) {
-	// 	var store = new LokiJSStore(testUri, { mongostore : { collection: 'whatsup' }});
-
-	// 	MongoClient.connect(testUri, function(err, db) {
-	// 		db.collection('whatsup', {strict:true}, function(err, collection) {
-	// 			expect(err).to.exist;
-
-	// 			store.storeOrUpdate(uuid.v4(), chance.email(), 
-	// 				1000*60, 'http://' + chance.domain() + '/page.html', 
-	// 				function() {
-	// 					db.collection('whatsup', {strict:true}, function(err, collection) {
-	// 						expect(collection).to.exist;
-	// 						expect(err).to.not.exist;
-	// 						done();
-	// 					});
-	// 				});
-	// 		});
-	// 	})
-	// })
+		store.storeOrUpdate(uuid.v4(), chance.email(), 
+			1000*60, 'http://' + chance.domain() + '/page.html', 
+			function() {
+				var db = new Loki(testFile);
+				db.loadDatabase({}, function() {
+					var collection = db.getCollection('passwordless-token');
+					var collection2 = db.getCollection('othername');
+					expect(collection).to.not.exist;
+					expect(collection2).to.exist;
+					done();
+				})
+		})
+	})
 
 	// it('should store tokens only in their hashed form', function (done) {
 	// 	var store = TokenStoreFactory();
