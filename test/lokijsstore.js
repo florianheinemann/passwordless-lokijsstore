@@ -108,9 +108,57 @@ describe('Specific tests', function() {
 			1000*60, 'http://' + chance.domain() + '/page.html', 
 			function() {
 				fs.access(filename, fs.F_OK, function(err) {
-					expect(err).to.not.exist;
 					fs.unlinkSync(filename);
+					expect(err).to.not.exist;
 					done();
+				});
+		})
+	})
+
+	it('should save a file automatically whenever a write occurs', function (done) {
+		var filename = chance.string({length: 15, pool: 'abcdefghijklmnopqrst'}) + ".json";
+		var store = new LokiJSStore(filename);
+
+		store.storeOrUpdate(uuid.v4(), chance.email(), 
+			1000*60, 'http://' + chance.domain() + '/page.html', 
+			function() {
+				fs.access(filename, fs.F_OK, function(err) {
+					fs.unlinkSync(filename);
+					expect(err).to.not.exist;
+					done();
+				});
+		})
+	})
+
+	it('should not save a file automatically whenever a write occurs with disablesaveatwrite', function (done) {
+		var filename = chance.string({length: 15, pool: 'abcdefghijklmnopqrst'}) + ".json";
+		var store = new LokiJSStore(filename, {lokijsstore: { disablesaveatwrite: true }});
+
+		store.storeOrUpdate(uuid.v4(), chance.email(), 
+			1000*60, 'http://' + chance.domain() + '/page.html', 
+			function() {
+				fs.access(filename, fs.F_OK, function(err) {
+					expect(err).to.exist;
+					done();
+				});
+		})
+	})
+
+	it('should save a file automatically with disablesaveatwrite enabled but autosave on', function (done) {
+		var filename = chance.string({length: 15, pool: 'abcdefghijklmnopqrst'}) + ".json";
+		var store = new LokiJSStore(filename, {autosave: true,
+												autosaveInterval: 0,
+									lokijsstore: { disablesaveatwrite: true }});
+
+		store.storeOrUpdate(uuid.v4(), chance.email(), 
+			1000*60, 'http://' + chance.domain() + '/page.html', 
+			function() {
+				setImmediate(function() {
+					fs.access(filename, fs.F_OK, function(err) {
+						fs.unlinkSync(filename);
+						expect(err).to.not.exist;
+						done();
+					});
 				});
 		})
 	})

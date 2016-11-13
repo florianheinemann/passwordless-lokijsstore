@@ -1,6 +1,6 @@
 {
   "name": "passwordless-lokijsstore",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "LokiJS TokenStore for Passwordless",
   "main": "index.js",
   "scripts": {

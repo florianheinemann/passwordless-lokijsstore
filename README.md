@@ -38,15 +38,17 @@ new LokiJSStore(file, [options]);
 Example:
 ```javascript
 passwordless.init(new LokiJSStore('tokens.json', {
-    verbose: true,
+    autosave: true,
+    autosaveInterval: 5000,
     lokijsstore: {
-        collection: 'tokens'
+        disablesaveatwrite: true
     }
 }));
 ```
 
 ### Options
 * **[lokijsstore.collection]:** *(string)* Optional. Name of the collection to be used. Default: 'passwordless-token'
+* **[lokijsstore.disablesaveatwrite]:** *(boolean)* Optional. Disables automatic write to disk whenever changes to the database occur. Recommended for more intense workloads. Should only be set to true when LokiJS's autosave is set to true. Default: false
 
 ## Hash and salt
 As the tokens are equivalent to passwords (even though they do have the security advantage of only being valid for a limited time) they have to be protected the same way. passwordless-lokijsstore uses [bcryptjs](https://github.com/dcodeIO/bcrypt.js) with automatically created random salts (10 rounds).
