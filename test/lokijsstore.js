@@ -3,6 +3,7 @@
 var expect = require('chai').expect;
 var uuid = require('node-uuid');
 var chance = new require('chance')();
+var fs = require('fs');
 
 var LokiJSStore = require('../');
 var TokenStore = require('passwordless-tokenstore');
@@ -37,7 +38,7 @@ var afterEachTest = function(done) {
 }
 
 // Call all standard tests
-standardTests(TokenStoreFactory, beforeEachTest, afterEachTest);
+standardTests(TokenStoreFactory, beforeEachTest, afterEachTest, 300);
 
 describe('Specific tests', function() {
 
@@ -96,6 +97,21 @@ describe('Specific tests', function() {
 					expect(collection2).to.exist;
 					done();
 				})
+		})
+	})
+
+	it('should change name of LokiJS file based on constructor', function (done) {
+		var filename = chance.string({length: 15, pool: 'abcdefghijklmnopqrst'}) + ".json";
+		var store = new LokiJSStore(filename);
+
+		store.storeOrUpdate(uuid.v4(), chance.email(), 
+			1000*60, 'http://' + chance.domain() + '/page.html', 
+			function() {
+				fs.access(filename, fs.F_OK, function(err) {
+					expect(err).to.not.exist;
+					fs.unlinkSync(filename);
+					done();
+				});
 		})
 	})
 
